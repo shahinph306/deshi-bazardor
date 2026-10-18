@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast"; // ✅ টোস্ট যুক্ত
 
 export default function SignInPage() {
   const router = useRouter();
@@ -26,17 +27,22 @@ export default function SignInPage() {
     });
 
     if (data) {
+      toast.success("সফলভাবে সাইন ইন হয়েছে! স্বাগতম 🎉"); // ✅ সফল বার্তা
       router.push("/");
       router.refresh();
+      return;
     }
+
     if (error) {
       console.error(error);
       setErrorMsg("ইমেইল বা পাসওয়ার্ড ভুল! আবার চেষ্টা করুন।");
+      toast.error("সাইন ইন ব্যর্থ! ইমেইল বা পাসওয়ার্ড ভুল ❌"); // ✅ ব্যর্থ বার্তা
       setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    toast.loading("Google দিয়ে সাইন ইন হচ্ছে...", { id: "google-login" }); // ✅ লোডিং বার্তা
     await authClient.signIn.social({
       provider: "google",
       callbackURL: "/",
@@ -44,6 +50,7 @@ export default function SignInPage() {
   };
 
   const handleGithubSignIn = async () => {
+    toast.loading("GitHub দিয়ে সাইন ইন হচ্ছে...", { id: "github-login" }); // ✅ লোডিং বার্তা
     await authClient.signIn.social({
       provider: "github",
       callbackURL: "/",
@@ -77,7 +84,6 @@ export default function SignInPage() {
               placeholder="your@email.com"
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               পাসওয়ার্ড
@@ -90,7 +96,6 @@ export default function SignInPage() {
               placeholder="আপনার পাসওয়ার্ড"
             />
           </div>
-
           <button
             type="submit"
             disabled={loading}
