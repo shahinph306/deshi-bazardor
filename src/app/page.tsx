@@ -1,13 +1,17 @@
+"use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import { Suspense } from "react";
 import banner from "../../public/basket.svg";
 import CurrentDate from "@/components/Date";
 import HomeScrollButton from "../components/HomeScrollButton";
 import RisingProductsPrices from "../components/RisingProductsPrices";
-import DecreasingProductPrices from "../components/DecresingProductPrices";
+import DecreasingProductPrices from "@/components/DecresingProductPrices";
 import AllProductsPrices from "../components/AllProducts";
 import ProductSkeleton from "@/components/ProductSkeleton";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 // ডাটা ফেচ করা কম্পোনেন্ট
 async function ProductsData() {
@@ -30,10 +34,22 @@ async function ProductsData() {
 
 // মূল হোম পেজ
 export default function Home() {
+  // ✅ Google/GitHub দিয়ে লগইনের পর স্বাগতম বার্তা
+  useEffect(() => {
+    const showWelcomeToast = async () => {
+      const { data: session } = await authClient.getSession();
+      if (session?.user && !sessionStorage.getItem("welcomeShown")) {
+        toast.success(`স্বাগতম, ${session.user.name}! আজকের বাজারের দাম দেখুন 🎉`);
+        sessionStorage.setItem("welcomeShown", "true");
+      }
+    };
+    showWelcomeToast();
+  }, []);
+
   return (
     <main className="w-full">
       <div className="mx-auto container px-4">
-        {/* হিরো সেকশন — সবসময় দেখাবে */}
+        {/* হিরো সেকশন */}
         <section className="mt-12 flex w-full items-center justify-between gap-6 border border-gray-300 bg-base-100 px-4 py-12">
           <div className="flex-1">
             <div className="text-green-700 bg-green-200 w-max px-3 py-1 rounded-full text-sm">
@@ -62,32 +78,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* দাম বাড়ছে — লোডিংসহ */}
+        {/* দাম বাড়ছে */}
         <section className="w-full py-6">
           <Suspense fallback={<LoadingSpinner text="দাম বাড়ছে এমন প্রোডাক্ট লোড হচ্ছে..." />}>
             <RisingProductsPrices />
           </Suspense>
         </section>
 
-        {/* দাম কমছে — লোডিংসহ */}
+        {/* দাম কমছে */}
         <section className="w-full py-6">
           <Suspense fallback={<LoadingSpinner text="দাম কমছে এমন প্রোডাক্ট লোড হচ্ছে..." />}>
             <DecreasingProductPrices />
           </Suspense>
         </section>
 
-        {/* সব প্রোডাক্ট — স্কেলটনসহ */}
+        {/* সব প্রোডাক্ট */}
         <section id="all-products-section" className="w-full py-6">
-          <Suspense fallback={
-            <div>
-              <h2 className="text-xl font-bold mb-4">সব প্রোডাক্ট</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <ProductSkeleton key={i} />
-                ))}
+          <Suspense
+            fallback={
+              <div>
+                <h2 className="text-xl font-bold mb-4">সব প্রোডাক্ট</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                    <ProductSkeleton key={i} />
+                  ))}
+                </div>
               </div>
-            </div>
-          }>
+            }
+          >
             <ProductsData />
           </Suspense>
         </section>

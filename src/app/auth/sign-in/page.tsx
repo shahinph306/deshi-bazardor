@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import toast from "react-hot-toast"; // ✅ টোস্ট যুক্ত
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
@@ -27,7 +28,7 @@ export default function SignInPage() {
     });
 
     if (data) {
-      toast.success("সফলভাবে সাইন ইন হয়েছে! স্বাগতম 🎉"); // ✅ সফল বার্তা
+      toast.success("সফলভাবে সাইন ইন হয়েছে! স্বাগতম 🎉");
       router.push("/");
       router.refresh();
       return;
@@ -36,25 +37,49 @@ export default function SignInPage() {
     if (error) {
       console.error(error);
       setErrorMsg("ইমেইল বা পাসওয়ার্ড ভুল! আবার চেষ্টা করুন।");
-      toast.error("সাইন ইন ব্যর্থ! ইমেইল বা পাসওয়ার্ড ভুল ❌"); // ✅ ব্যর্থ বার্তা
+      toast.error("সাইন ইন ব্যর্থ! ইমেইল বা পাসওয়ার্ড ভুল ❌");
       setLoading(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    toast.loading("Google দিয়ে সাইন ইন হচ্ছে...", { id: "google-login" }); // ✅ লোডিং বার্তা
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
+    // লোডিং টোস্ট দেখান
+    toast.loading("Google দিয়ে সাইন ইন হচ্ছে...", { id: "google-login" });
+    
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+      // রিডাইরেক্ট হওয়ার আগে সফল মেসেজ আপডেট
+      toast.success("Google দিয়ে সাইন ইন সফল! স্বাগতম 🎉", {
+        id: "google-login",
+        duration: 2000,
+      });
+    } catch (err) {
+      toast.error("Google সাইন ইন ব্যর্থ! আবার চেষ্টা করুন ❌", {
+        id: "google-login",
+      });
+    }
   };
 
   const handleGithubSignIn = async () => {
-    toast.loading("GitHub দিয়ে সাইন ইন হচ্ছে...", { id: "github-login" }); // ✅ লোডিং বার্তা
-    await authClient.signIn.social({
-      provider: "github",
-      callbackURL: "/",
-    });
+    toast.loading("GitHub দিয়ে সাইন ইন হচ্ছে...", { id: "github-login" });
+    
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+      toast.success("GitHub দিয়ে সাইন ইন সফল! স্বাগতম 🎉", {
+        id: "github-login",
+        duration: 2000,
+      });
+    } catch (err) {
+      toast.error("GitHub সাইন ইন ব্যর্থ! আবার চেষ্টা করুন ❌", {
+        id: "github-login",
+      });
+    }
   };
 
   return (
@@ -64,13 +89,13 @@ export default function SignInPage() {
         <p className="text-gray-500 text-sm mt-2 mb-8">
           বিস্তারিত দাম, বাজারের তথ্য ও প্রোফাইল দেখতে অ্যাকাউন্টে প্রবেশ করুন।
         </p>
-
+        
         {errorMsg && (
           <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm">
             {errorMsg}
           </div>
         )}
-
+        
         <form onSubmit={onSubmit} className="space-y-4 text-left">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
