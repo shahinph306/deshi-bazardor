@@ -1,5 +1,4 @@
 export const instant = false;
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -68,14 +67,12 @@ export default async function ProductPage({
   return (
     <main className="min-h-screen bg-[#f0f5f0] py-6 px-4">
       <div className="container mx-auto">
-        {/* ব্রেডক্রাম্ব */}
         <div className="text-sm text-gray-500 mb-6">
           <Link href="/" className="hover:underline">হোম</Link>
           <span> / </span>
           <span className="text-gray-800 font-medium">{productName}</span>
         </div>
 
-        {/* প্রোডাক্ট হেডার */}
         <div className="bg-white rounded-2xl border border-[#dce5dc] p-6 mb-6 flex justify-between items-start flex-wrap gap-4">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-xl bg-[#f0f5f0] flex items-center justify-center text-2xl">
@@ -89,7 +86,7 @@ export default async function ProductPage({
               <p className="text-gray-500 text-sm mt-2">{priceChangeText}</p>
             </div>
           </div>
-          <div className="text-center bg-[#f0f5f0] rounded-xl p-4 min-w-[140px]">
+          <div className="text-center bg-[#f0f5f0] rounded-xl p-4 min-w-35">
             <p className="text-xs text-gray-500">আজকের দাম</p>
             <p className="text-3xl font-bold text-gray-900 mt-1">৳ {enToBn(product.today)}</p>
             <p className="text-xs text-gray-500 mt-1">প্রতি {unitLabel}</p>
@@ -102,7 +99,6 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* দামের সারসংক্ষেপ */}
         <div className="bg-white rounded-2xl border border-[#dce5dc] p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-900 mb-4">দামের সারসংক্ষেপ</h2>
           <div className="grid grid-cols-3 gap-4">
@@ -124,7 +120,6 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* বাজারভিত্তিক দামের তালিকা */}
         <div className="bg-white rounded-2xl border border-[#dce5dc] overflow-hidden">
           <div className="p-4 border-b border-[#dce5dc] font-bold text-gray-900">
             আজকের বিভিন্ন বাজারের দাম

@@ -1,4 +1,4 @@
-"use client"; // 👈 যোগ করুন — Next.js ১৬-এর এরর এড়ানোর জন্য
+"use client"; 
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,7 +16,6 @@ interface Product {
   };
 }
 
-// ইংরেজি সংখ্যাকে বাংলায় রূপান্তর
 const enToBn = (num: number | string) =>
   num.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[parseInt(d)]);
 
@@ -80,7 +79,7 @@ const RisingProductsPrices = () => {
                 {product.image}
               </div>
               <div>
-                {/* বাংলায় নাম দেখাচ্ছি */}
+                
                 <h2 className="font-semibold text-gray-900">
                   {product.nameBn || product.slug.replaceAll("-", " ")}
                 </h2>

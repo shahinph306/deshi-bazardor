@@ -39,7 +39,7 @@ export default function Home() {
     const showWelcomeToast = async () => {
       const { data: session } = await authClient.getSession();
       if (session?.user && !sessionStorage.getItem("welcomeShown")) {
-        toast.success(`স্বাগতম, ${session.user.name}! আজকের বাজারের দাম দেখুন 🎉`);
+        toast.success(`স্বাগতম, ${session.user.name}!`);
         sessionStorage.setItem("welcomeShown", "true");
       }
     };

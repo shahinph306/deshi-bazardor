@@ -1,5 +1,4 @@
-"use client"; // ✅ জরুরী — Toaster ক্লায়েন্ট কম্পোনেন্ট
-
+"use client"; 
 import { Toaster } from "react-hot-toast";
 
 export default function AppToaster() {

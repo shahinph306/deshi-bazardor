@@ -1,93 +1,6 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @next/next/no-img-element */
-// /* eslint-disable @next/next/no-img-element */
-// import { auth } from "@/lib/auth";
-// import Link from "next/link";
-// import { headers } from "next/headers"; // ✅ যোগ করুন
-
-// export default async function ProfilePage() {
-//   // ✅ headers পাঠানো জরুরী — Next.js 16-এ
-//   const session = await auth.api.getSession({
-//     headers: await headers()
-//   });
-  
-//   const user = session?.user;
-
-//   if (!user) {
-//     return (
-//       <div className="min-h-screen flex flex-col items-center justify-center p-6">
-//         <p className="text-lg text-gray-600 mb-4">অনুগ্রহ করে প্রথমে লগইন করুন</p>
-//         <Link
-//           href="/auth/sign-in"
-//           className="bg-green-600 text-white px-6 py-2.5 rounded-lg hover:bg-green-700"
-//         >
-//           সাইন ইন করুন
-//         </Link>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="max-w-2xl mx-auto p-6">
-//       <h1 className="text-2xl font-bold mb-2">আমার প্রোফাইল</h1>
-//       <p className="text-gray-500 mb-8">আপনার অ্যাকাউন্টের তথ্য এখানে পরিবর্তন করতে পারবেন।</p>
-
-//       <div className="bg-white rounded-lg shadow p-6 mb-6 flex items-center gap-4">
-//         {user.image ? (
-//           <img
-//             src={user.image}
-//             alt={user.name || "প্রোফাইল ছবি"}
-//             className="w-16 h-16 rounded-full object-cover border-2 border-green-500"
-//             referrerPolicy="no-referrer"
-//           />
-//         ) : (
-//           <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl font-bold">
-//             {user.name?.charAt(0).toUpperCase() || "ব্য"}
-//           </div>
-//         )}
-//         <div>
-//           <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
-//           <p className="text-gray-500">{user.email}</p>
-//         </div>
-//         <Link
-//           href="/"
-//           className="ml-auto px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 text-sm"
-//         >
-//           হোমে ফিরে যান
-//         </Link>
-//       </div>
-
-//       <div className="bg-white rounded-lg shadow p-6">
-//         <h3 className="font-semibold text-lg mb-4">তথ্য পরিবর্তন করুন</h3>
-//         <form className="space-y-4">
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700 mb-1">
-//               আপনার নাম
-//             </label>
-//             <input
-//               type="text"
-//               name="name"
-//               defaultValue={user.name || ""}
-//               className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-//               placeholder="আপনার নাম লিখুন"
-//             />
-//           </div>
-//           <button
-//             type="submit"
-//             className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
-//           >
-//             হালনাগাদ করুন
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/set-state-in-effect */
 
 "use client";
 
@@ -160,7 +73,6 @@ export default function ProfilePage() {
     }
   };
 
-  // ✅ নতুন — সাইন আউট ফাংশন
   const handleSignOut = async () => {
     setSigningOut(true);
     try {
@@ -196,7 +108,6 @@ export default function ProfilePage() {
           <p className="text-gray-500">{user.email}</p>
         </div>
 
-        {/* ✅ নতুন — ছবির মতো সাইন আউট বাটন */}
         <button
           onClick={handleSignOut}
           disabled={signingOut}

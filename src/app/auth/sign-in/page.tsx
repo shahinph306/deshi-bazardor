@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
@@ -28,7 +29,7 @@ export default function SignInPage() {
     });
 
     if (data) {
-      toast.success("সফলভাবে সাইন ইন হয়েছে! স্বাগতম 🎉");
+      toast.success("সফলভাবে সাইন ইন হয়েছে! স্বাগতম ");
       router.push("/");
       router.refresh();
       return;
@@ -43,7 +44,6 @@ export default function SignInPage() {
   };
 
   const handleGoogleSignIn = async () => {
-    // লোডিং টোস্ট দেখান
     toast.loading("Google দিয়ে সাইন ইন হচ্ছে...", { id: "google-login" });
     
     try {
@@ -51,7 +51,6 @@ export default function SignInPage() {
         provider: "google",
         callbackURL: "/",
       });
-      // রিডাইরেক্ট হওয়ার আগে সফল মেসেজ আপডেট
       toast.success("Google দিয়ে সাইন ইন সফল! স্বাগতম 🎉", {
         id: "google-login",
         duration: 2000,

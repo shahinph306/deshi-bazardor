@@ -10,7 +10,7 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
@@ -30,7 +30,7 @@ export default function SignUpPage() {
     });
 
     if (data) {
-      toast.success("অ্যাকাউন্ট তৈরি সফল! স্বাগতম 🎉");
+      toast.success("অ্যাকাউন্ট তৈরি সফল! স্বাগতম");
       router.push("/");
       router.refresh();
       return;

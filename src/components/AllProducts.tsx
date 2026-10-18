@@ -19,8 +19,6 @@ export interface Product {
 }
 
 type SortOption = "default" | "price-low" | "price-high" | "name";
-
-// সংখ্যাকে বাংলায় রূপান্তর
 const enToBn = (num: number | string) =>
   num.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[parseInt(d)]);
 
@@ -51,7 +49,6 @@ export default function AllProductsPrices({
 
   return (
     <section className="w-full py-4">
-      {/* শিরোনাম ও সাজানোর অপশন */}
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold text-gray-900">
@@ -78,11 +75,9 @@ export default function AllProductsPrices({
         </label>
       </div>
 
-      {/* পণ্যসমূহ */}
       {sortedProducts.length > 0 ? (
         <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sortedProducts.map((product) => {
-            // বাংলা নাম প্রাধান্য দিচ্ছি
             const productName =
               product.nameBn ||
               product.nameEn ||

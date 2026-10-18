@@ -36,7 +36,6 @@ const DecreasingProductPrices = () => {
           ? result
           : (result.data ?? []);
 
-        // দাম কমেছে এমন পণ্যগুলো বাছাই
         const topProducts = allProducts
           .filter((p) => p.change?.dir === "down")
           .sort((a, b) => a.change.pct - b.change.pct)

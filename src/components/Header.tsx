@@ -3,7 +3,6 @@ import NavLinks from './NavLinks';
 import CurrentDate from './Date';
 import UserInfo from './UserInfo';
 
-
 const Header = () => {
 
     // console.log(date);

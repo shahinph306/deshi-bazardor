@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFoundPage() {
   return (
-    <section className="flex min-h-[420px] flex-1 flex-col items-center justify-center bg-[#F0F5F0] px-4 py-12 text-center">
+    <section className="flex min-h-105 flex-1 flex-col items-center justify-center bg-[#F0F5F0] px-4 py-12 text-center">
       <div className="mb-3 text-6xl" role="img" aria-label="কেনাকাটার ঝুড়ি">
         🛒
       </div>

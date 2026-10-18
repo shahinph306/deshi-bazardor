@@ -1,96 +1,4 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-// export const instant = false; // ✅ এরর চলে যাবে
-
-// import Link from "next/link";
-
-// interface Product {
-//   id: number;
-//   nameBn: string;
-//   category: string;
-//   categoryNameBn: string;
-//   image: string;
-//   unit: string;
-//   today: number;
-//   change: { dir: "up" | "down" | "flat"; pct: number };
-// }
-
-// const enToBn = (n: number | string) =>
-//   n.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[+d]);
-
-// async function getProducts() {
-//   const res = await fetch(
-//     "https://openapi.programming-hero.com/api/bazardor/products",
-//     { next: { revalidate: 60 } }
-//   );
-//   if (!res.ok) return [];
-//   const data = await res.json();
-//   return Array.isArray(data) ? data : (data.data || []);
-// }
-
-// export default async function CategoryPage({
-//   params,
-// }: {
-//   params: Promise<{ slug: string }>;
-// }) {
-//   const { slug } = await params;
-//   const allProducts = await getProducts();
-//   const products = allProducts.filter(p => p.category === slug);
-//   const categoryName = products[0]?.categoryNameBn || slug;
-
-//   return (
-//     <main className="min-h-screen bg-[#f0f5f0] py-6 px-4">
-//       <div className="container mx-auto max-w-5xl">
-//         <p className="text-sm text-gray-500 mb-6">
-//           <Link href="/" className="hover:underline">হোম</Link> /{" "}
-//           <span className="text-gray-800 font-medium">{categoryName}</span>
-//         </p>
-//         <h1 className="text-2xl font-bold text-gray-900 mb-4">{categoryName}</h1>
-//         <p className="text-sm text-gray-500 mb-6">
-//           {enToBn(products.length)}টি পণ্য পাওয়া গেছে
-//         </p>
-
-//         {products.length > 0 ? (
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-//             {products.map(p => (
-//               <Link
-//                 key={p.id}
-//                 href={`/product/${p.id}`}
-//                 className="block p-4 bg-white rounded-2xl border-2 border-[#dce5dc] hover:shadow-md transition-shadow"
-//               >
-//                 <div className="flex items-center gap-3 mb-4">
-//                   <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-[#f0f5f0] text-2xl">
-//                     {p.image}
-//                   </div>
-//                   <div>
-//                     <h2 className="font-semibold text-gray-900">{p.nameBn}</h2>
-//                     <p className="text-xs text-gray-500">প্রতি {p.unit}</p>
-//                   </div>
-//                 </div>
-//                 <div className="flex items-end justify-between">
-//                   <div>
-//                     <p className="text-xs text-gray-500 mb-1">আজকের দাম</p>
-//                     <p className="text-lg font-bold">৳ {enToBn(p.today)}</p>
-//                   </div>
-//                   <span className={`px-3 py-1 rounded-full bg-[#f0f5f0] text-xs font-medium ${
-//                     p.change.dir === "up" ? "text-red-500" :
-//                     p.change.dir === "down" ? "text-green-600" : "text-gray-500"
-//                   }`}>
-//                     {p.change.dir === "up" ? "▲" : p.change.dir === "down" ? "▼" : "—"}{" "}
-//                     {enToBn(Math.abs(p.change.pct))}%
-//                   </span>
-//                 </div>
-//               </Link>
-//             ))}
-//           </div>
-//         ) : (
-//           <p className="py-12 text-center text-gray-500">
-//             এই বিভাগে কোনো পণ্য পাওয়া যায়নি
-//           </p>
-//         )}
-//       </div>
-//     </main>
-//   );
-// }
 
 'use client';
 
@@ -126,7 +34,6 @@ async function getProducts() {
   return Array.isArray(data) ? data : (data.data || []);
 }
 
-// ভিতরের কন্টেন্ট কম্পোনেন্ট
 function CategoryContent() {
   const params = useParams();
   const slug = params.slug as string;
@@ -136,13 +43,11 @@ function CategoryContent() {
   const [currentSort, setCurrentSort] = useState<SortOption>("default");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // পূর্বের বাছাই লোড
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY) as SortOption;
     if (saved) setCurrentSort(saved);
   }, []);
 
-  // ডেটা লোড
   useEffect(() => {
     async function load() {
       const all = await getProducts();
@@ -152,7 +57,6 @@ function CategoryContent() {
     load();
   }, [slug]);
 
-  // বাইরে ক্লিক করলে বন্ধ
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -163,14 +67,12 @@ function CategoryContent() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // সোর্ট পরিবর্তন
   const handleSortChange = (value: SortOption) => {
     setCurrentSort(value);
     localStorage.setItem(STORAGE_KEY, value);
     setIsDropdownOpen(false);
   };
 
-  // সোর্টিং লজিক
   const sortedProducts = (() => {
     const arr = [...products];
     if (currentSort === "price-asc") {
@@ -212,7 +114,6 @@ function CategoryContent() {
           </div>
         </div>
 
-        {/* ক্লিকযোগ্য ড্রপডাউন — লিঙ্ক পরিষ্কার */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -245,12 +146,10 @@ function CategoryContent() {
         </div>
       </div>
 
-      {/* মোট পণ্য */}
       <p className="text-sm text-gray-500 mb-4">
         মোট {enToBn(sortedProducts.length)}টি পণ্য দেখানো হচ্ছে
       </p>
 
-      {/* প্রোডাক্ট গ্রিড */}
       {sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {sortedProducts.map(p => (
@@ -293,7 +192,6 @@ function CategoryContent() {
   );
 }
 
-// মূল কম্পোনেন্ট — Suspense দিয়ে মোড়ানো
 export default function CategoryPage() {
   return (
     <main className="min-h-screen bg-[#f0f5f0] py-6 px-4">
